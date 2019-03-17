@@ -2,13 +2,15 @@ FROM debian:stretch
 MAINTAINER Mike Purvis
 
 RUN apt-get update && \
-apt-get install gnupg -y && \
+apt-get install gnupg dpkg-sig -y && \
 apt-get clean
 
+# Workaround for the ipv6 gpg issue
+RUN mkdir ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
 
 # Instructions from: http://www.aptly.info/download/
 RUN echo "deb http://repo.aptly.info/ squeeze main" > /etc/apt/sources.list.d/aptly.list && \
-apt-key adv --keyserver keys.gnupg.net --recv-keys 9C7DE460 && \
+apt-key adv --keyserver pool.sks-keyservers.net --recv-keys ED75B5A4483DA07C && \
 apt-get update && \
 apt-get install aptly ca-certificates -y && \
 apt-get clean
