@@ -2,7 +2,7 @@ FROM debian:stretch
 MAINTAINER Mike Purvis
 
 RUN apt-get update && \
-apt-get install gnupg dpkg-sig -y && \
+apt-get install gpgv1 gnupg1 dpkg-sig -y && \
 apt-get clean
 
 # Workaround for the ipv6 gpg issue
